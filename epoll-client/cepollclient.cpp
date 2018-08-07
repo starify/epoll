@@ -44,7 +44,7 @@ int CEpollClient::ConnectToServer(int iUserId,const char *pServerIp,unsigned sho
 
     connect(m_pAllUserStatus[iUserId].iSockFd, (const sockaddr*)&addr, sizeof(addr));
     m_pAllUserStatus[iUserId].iUserStatus = CONNECT_OK;
-    m_pAllUserStatus[iUserId].iSockFd = m_pAllUserStatus[iUserId].iSockFd;
+    // m_pAllUserStatus[iUserId].iSockFd = m_pAllUserStatus[iUserId].iSockFd;
 
     return m_pAllUserStatus[iUserId].iSockFd;
 }
@@ -102,11 +102,11 @@ bool CEpollClient::CloseUser(int iUserId)
 
 int CEpollClient::RunFun()
 {
-    int isocketfd = -1;
+    // int isocketfd = -1;
     for(int iuserid=0; iuserid<m_iUserCount; iuserid++)
     {
         struct epoll_event event;
-        isocketfd = ConnectToServer(iuserid, m_ip, m_iPort);
+        int isocketfd = ConnectToServer(iuserid, m_ip, m_iPort);
         if(isocketfd < 0)
             cout <<"[CEpollClient error]: RunFun, connect fail" <<endl;
         m_iSockFd_UserId[isocketfd] = iuserid;//将用户ID和socketid关联起来
